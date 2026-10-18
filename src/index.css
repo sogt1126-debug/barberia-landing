@@ -1,0 +1,313 @@
+@import "tailwindcss";
+
+/* ============================================================
+   TIPOGRAFÍAS AUTO-ALOJADAS (public/fonts)
+   Sin peticiones a terceros: privacidad, rendimiento y
+   funcionamiento aunque el CDN externo no exista.
+   ============================================================ */
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/bodoni-moda.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Bodoni Moda";
+  font-style: italic;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("/fonts/bodoni-moda-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url("/fonts/manrope.woff2") format("woff2");
+}
+
+/* ============================================================
+   DISEÑO — tokens de la landing
+   Paleta: negro profundo, gris carbón, blanco cálido y dorado.
+   Cambia estos valores para re-tematizar toda la web.
+   ============================================================ */
+@theme {
+  --color-ink: #0b0b0b;
+  --color-carbon: #171717;
+  --color-cream: #f5f2ec;
+  --color-gold: #c6a46c;
+
+  --font-display: "Bodoni Moda", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+
+  /* Curvas de movimiento (no inventadas: ease-out fuerte y ease-in-out fuerte).
+     Sobrescriben los `ease-out`/`ease-in-out` por defecto de Tailwind. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+
+  --animate-scroll-line: scroll-line 2.4s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+  }
+
+  /* Imágenes sin deformar */
+  img {
+    user-select: none;
+  }
+}
+
+/* ============================================================
+   MOMENTO AUTORAL — el titular del hero sube enmascarado
+   ============================================================ */
+.hero-line {
+  animation: hero-line-in 0.8s var(--ease-out) both;
+}
+
+@keyframes hero-line-in {
+  from {
+    transform: translateY(115%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Entrada escalonada del contenido del hero (corre off the main thread) */
+.hero-in {
+  animation: hero-in 0.7s var(--ease-out) both;
+}
+
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* La fotografía del hero "asienta" lentamente: entrada cinematográfica */
+.hero-settle {
+  animation: hero-settle 1.7s var(--ease-out) both;
+}
+
+@keyframes hero-settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* ============================================================
+   REVELADO AL HACER SCROLL (IntersectionObserver + transición CSS)
+   - fade + desplazamiento/escala; nunca scale(0)
+   - el escalonado entra por `transition-delay` inline
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.6s var(--ease-out);
+}
+
+.reveal[data-variant="up"]:not(.is-visible) {
+  transform: translateY(1.5rem);
+}
+
+.reveal[data-variant="scale"]:not(.is-visible) {
+  transform: scale(0.96);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Filete dorado que se dibuja al aparecer el título (motivo de marca) */
+.draw-rule {
+  transform: scaleX(0);
+  transition: transform 0.7s var(--ease-out) 0.15s;
+}
+
+.reveal.is-visible .draw-rule {
+  transform: scaleX(1);
+}
+
+/* ============================================================
+   MICRO-INTERACCIÓN — destello dorado en el botón primario (solo hover real)
+   ============================================================ */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 58%
+  );
+  transform: translateX(-130%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover::after {
+    transform: translateX(130%);
+    transition: transform 0.65s var(--ease-out);
+  }
+}
+
+/* ============================================================
+   ATENCIÓN — anillo suave en el FAB de conversión
+   (transform + opacity; bajo reduced-motion termina invisible)
+   ============================================================ */
+.fab-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid #25d366;
+  opacity: 0.55;
+  animation: fab-ring 2.8s var(--ease-out) infinite;
+  pointer-events: none;
+}
+
+@keyframes fab-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  70%,
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   SUPERFICIES DE NAVEGADOR TEMATIZADAS (paleta de marca)
+   ============================================================ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a362f var(--color-ink);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a362f;
+  border: 2px solid var(--color-ink);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold);
+}
+
+/* ============================================================
+   MENÚ MÓVIL
+   ============================================================ */
+.menu-panel {
+  animation: menu-in 0.3s var(--ease-out) both;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(260%);
+  }
+}
+
+/* ============================================================
+   MOVIMIENTO REDUCIDO DEL SISTEMA
+   - se conserva el fundido (ayuda a la comprensión)
+   - se elimina el desplazamiento/escala
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal[data-variant="up"],
+  .reveal[data-variant="scale"] {
+    transform: none !important;
+  }
+
+  .draw-rule {
+    transform: none !important;
+  }
+
+  .btn-primary::after,
+  .fab-pulse::before {
+    display: none;
+  }
+}
