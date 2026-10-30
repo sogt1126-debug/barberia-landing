@@ -69,7 +69,8 @@ src/
 │   ├── Reveal.tsx          aparición al hacer scroll (IntersectionObserver)
 │   └── BrandIcons.tsx      iconos de WhatsApp, Instagram y TikTok
 ├── index.css               paleta, tipografías y animaciones
-└── App.tsx                 composición de la página
+├── App.tsx                 composición de la página
+└── main.tsx                punto de entrada (ReactDOM)
 ```
 
 ---

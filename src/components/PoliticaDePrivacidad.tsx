@@ -51,7 +51,9 @@ export function PoliticaDePrivacidad() {
         {/* max-w-xl ≈ 576px: medida de lectura cómoda (65–75 caracteres). */}
         <div className="mx-auto max-w-xl">
           <Reveal>
-            <SectionHeading title="Política de privacidad." />
+            {/* h1: en esta vista no está el hero, así que el título del
+                documento debe ser el encabezado principal. */}
+            <SectionHeading title="Política de privacidad." as="h1" />
           </Reveal>
 
           <Reveal delay={80}>
