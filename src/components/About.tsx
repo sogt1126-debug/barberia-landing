@@ -26,9 +26,9 @@ export function About() {
           <SectionHeading title={about.title} />
 
           <div className="mt-7 space-y-5">
-            {about.paragraphs.map((paragraph) => (
+            {about.paragraphs.map((paragraph, index) => (
               <p
-                key={paragraph.slice(0, 24)}
+                key={index}
                 className="text-[0.95rem] leading-relaxed text-cream/70"
               >
                 {paragraph}

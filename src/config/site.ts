@@ -342,7 +342,9 @@ export const siteConfig = {
       { days: 'Domingos', hours: '10:00 – 15:00' },
     ] satisfies Schedule[],
 
-    /** Handles y URLs de ejemplo: reemplázalos por los perfiles reales. */
+    /** Handles y URLs de ejemplo: reemplázalos por los perfiles reales.
+     *  Si el negocio no tiene redes, escribe `[] as Social[]`: la web oculta
+     *  la sección sola y el build no falla (sin el `as`, TS infiere `never[]`). */
     socials: [
       {
         id: 'instagram',
@@ -356,7 +358,7 @@ export const siteConfig = {
         handle: '@blacklabel.ejemplo',
         url: 'https://www.tiktok.com/@blacklabel.ejemplo',
       },
-    ] satisfies Social[],
+    ] as Social[],
   },
 
   /* ------------------------------------------------------------

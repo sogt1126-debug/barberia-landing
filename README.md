@@ -7,6 +7,12 @@ Creada con **React 19 + TypeScript + Vite + Tailwind CSS v4**.
 
 ---
 
+## Requisitos
+
+- **Node.js `^20.19.0` o `>=22.12.0`** (Vite 8 no arranca en versiones
+  anteriores; comprueba tu versión con `node --version`).
+- npm (se entrega con Node; el proyecto usa `package-lock.json`).
+
 ## Puesta en marcha
 
 ```bash
@@ -131,19 +137,22 @@ bordes y acentos usan las utilidades `bg-ink`, `text-cream`, `text-gold`…).
 
 ### 3. Tipografías — `public/fonts/` + `src/index.css`
 
-- **Títulos:** Bodoni Moda (`--font-display`, clase `font-display`)
-- **Texto:** Manrope (`--font-sans`, fuente por defecto)
+- **Títulos:** Fraunces (`--font-display`, clase `font-display`) — serif de
+  carácter artesanal, con itálica variable para el segundo título del hero.
+- **Texto:** Archivo (`--font-sans`, fuente por defecto) — grotesca de
+  retícula periodística, muy nítida en mayúsculas con tracking.
 
-Las dos fuentes están **auto-alojadas** en `public/fonts/` (3 archivos woff2
-declarados con `@font-face` al inicio de `index.css`): el sitio no pide nada a
-Google ni a ningún CDN, lo que mejora la privacidad del visitante y la carga.
+Las dos familias son de licencia libre **SIL OFL** (aptas para reventa) y están
+**auto-alojadas** en `public/fonts/` (3 archivos woff2 declarados con
+`@font-face` al inicio de `index.css`): el sitio no pide nada a Google ni a
+ningún CDN, lo que mejora la privacidad del visitante y la carga.
 
 Para cambiarlas: descarga los woff2 nuevos en `public/fonts/`, actualiza los
 `@font-face` de `index.css` y las variables `--font-display` / `--font-sans`.
 
 ### 4. Fotos
 
-Las 10 fotos actuales están en **`public/fotos/`** (origen: Unsplash, licencia
+Las 14 fotos actuales están en **`public/fotos/`** (origen: Unsplash, licencia
 libre) y la web las sirve desde ahí: sin peticiones externas a terceros.
 
 | Archivo | Uso |
@@ -212,6 +221,53 @@ Para personalizar:
 - Accesibilidad: `lang="es"`, encabezados jerárquicos, enlace "saltar al
   contenido", foco visible en dorado, textos alternativos, contraste AA y
   `<noscript>` con datos de contacto.
+
+---
+
+## Datos que debes pedir al cliente
+
+Antes de personalizar la landing, recopila (todo se edita en
+`src/config/site.ts`):
+
+| Dato | Dónde va | Obligatorio |
+| --- | --- | --- |
+| Nombre comercial exacto (y "estudio/taller" si usa) | `brand` | Sí |
+| Número de WhatsApp con código de país, sin espacios (`51999888777`) | `contact.whatsapp.number` | Sí |
+| Texto del mensaje con el que quieres que abran el chat | `contact.whatsapp.defaultMessage` / `bookingMessage` | Sí |
+| Dirección (calle y distrito/ciudad) | `contact.address` | Sí |
+| Enlace de Google Maps (botón "Compartir" → copiar enlace) | `contact.mapsUrl` | Sí |
+| Horarios por día (con texto libre para festivos) | `contact.hours` | Sí |
+| Lista de servicios con nombre, precio y descripción | `services` | Sí |
+| Moneda del país (`S/`, `MX$`, `€`…) | `pricing.currency` | Sí |
+| Fotos reales: local, silla/trabajo, 4 de servicios y 6 de galería | `public/fotos/` + rutas en `site.ts` | Sí |
+| Instagram/TikTok (usuario y enlace) o confirmación de que no tiene | `contact.socials` | No |
+| Título y descripción SEO (o redáctalos tú a partir de su actividad) | `seo` | Sí |
+| Dominio reservado (aún puede quedar vacío hasta contratar hosting) | `seo.url` | No |
+| Eslogan y textos "nosotros" (si no, se adapta el copy de ejemplo) | `hero`, `about` | No |
+
+> No inventes datos: si el cliente no entrega algo, deja los valores de
+> demostración claramente marcados y dilo en la entrega. Los datos ficticios
+> actuales están comentados en `site.ts` (búsqueda: "ficticio", "demo").
+
+## Checklist de entrega (cada nueva barbería)
+
+1. `npm install` y `npm run check` en verde (lint + typecheck + build).
+2. Todos los datos del cliente aplicados en `src/config/site.ts` y
+   `src/index.css` (colores).
+3. Fotos del cliente en `public/fotos/` (mismos nombres o rutas actualizadas);
+   comprueba en el navegador que **todas** cargan.
+4. Textos alternativos (`alt`, `imageAlt`) escritos con la foto real.
+5. `npm run preview` y revisión visual: móvil (~360 px), tablet y escritorio;
+   comprobar que no hay scroll horizontal.
+6. Probar los botones de WhatsApp (hero, servicios, flotante y pie) con el
+   número real, y el enlace de Maps.
+7. Fecha de la política (`legal.politicaActualizada`) puesta al día y texto
+   revisado si el sitio ha cambiado.
+8. `seo.url` con el dominio definitivo **antes** de generar el build final
+   (de lo contrario faltarán canonical, `og:url` y sitemap).
+9. Build final con `npm run build` y subida de `dist/` al hosting.
+10. Verificar en el dominio publicado: título, favicon, imagen al compartir
+    en WhatsApp y `https://dominio/sitemap.xml`.
 
 ---
 

@@ -98,34 +98,36 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Redes */}
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
-              Síguenos
-            </h3>
-            <ul className="mt-5 space-y-3 text-sm">
-              {contact.socials.map((social) => {
-                const Icon = socialIcons[social.id]
-                return (
-                  <li key={social.id}>
-                    <a
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2.5 text-cream/70 transition-colors hover:text-gold"
-                    >
-                      <Icon
-                        className="size-4 shrink-0 text-gold"
-                        aria-hidden="true"
-                      />
-                      {social.handle}
-                      <span className="sr-only">{externalNote}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+          {/* Redes (solo si el negocio tiene alguna configurada) */}
+          {contact.socials.length > 0 && (
+            <div>
+              <h3 className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
+                Síguenos
+              </h3>
+              <ul className="mt-5 space-y-3 text-sm">
+                {contact.socials.map((social) => {
+                  const Icon = socialIcons[social.id]
+                  return (
+                    <li key={social.id}>
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2.5 text-cream/70 transition-colors hover:text-gold"
+                      >
+                        <Icon
+                          className="size-4 shrink-0 text-gold"
+                          aria-hidden="true"
+                        />
+                        {social.handle}
+                        <span className="sr-only">{externalNote}</span>
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Barra legal */}

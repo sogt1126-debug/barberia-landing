@@ -7,8 +7,9 @@ import { WhatsAppButton } from './WhatsAppButton'
 
 export function Hero() {
   const { hero, brand, contact } = siteConfig
-  const [firstLine, secondLine = ''] = hero.titleLines
-  const secondWithoutDot = secondLine.replace(/\.$/, '')
+  // La segunda línea es opcional: si un cliente define un solo título,
+  // no se pinta una segunda línea (evita un punto dorado suelto en pantalla).
+  const [firstLine, secondLine] = hero.titleLines
 
   return (
     <section
@@ -61,15 +62,17 @@ export function Hero() {
             <span className="block overflow-hidden pb-[0.06em]">
               <span className="hero-line block">{firstLine}</span>
             </span>
-            <span className="block overflow-hidden pb-[0.06em]">
-              <span
-                className="hero-line block italic"
-                style={{ animationDelay: '140ms' }}
-              >
-                {secondWithoutDot}
-                <span className="text-gold">.</span>
+            {secondLine && (
+              <span className="block overflow-hidden pb-[0.06em]">
+                <span
+                  className="hero-line block italic"
+                  style={{ animationDelay: '140ms' }}
+                >
+                  {secondLine.replace(/\.$/, '')}
+                  <span className="text-gold">.</span>
+                </span>
               </span>
-            </span>
+            )}
           </h1>
 
           <p className="hero-in mt-7 max-w-xl text-base leading-relaxed text-cream/70 sm:text-lg md:max-w-2xl" style={{ animationDelay: '360ms' }}>
