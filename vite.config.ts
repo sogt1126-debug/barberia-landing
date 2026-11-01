@@ -4,7 +4,7 @@ import type { HtmlTagDescriptor } from 'vite'
 import { defineConfig } from 'vite'
 import { siteConfig } from './src/config/site.ts'
 
-const { brand, contact, pricing, seo, services } = siteConfig
+const { brand, contact, hero, pricing, seo, services } = siteConfig
 
 /** URL del sitio publicado (sin barra final). Vacía mientras no haya dominio. */
 const baseUrl = seo.url.replace(/\/+$/, '')
@@ -111,6 +111,13 @@ function localBusinessJsonLd(): string {
 function headTags(): HtmlTagDescriptor[] {
   const ogImage = absolute(seo.ogImage)
   const tags: HtmlTagDescriptor[] = [
+    // La foto del hero la pinta React: precargarla evita que el navegador
+    // la descubra recién al ejecutar el JS (mejora el LCP).
+    {
+      tag: 'link',
+      injectTo: 'head',
+      attrs: { rel: 'preload', as: 'image', href: hero.image, fetchpriority: 'high' },
+    },
     { tag: 'title', injectTo: 'head', children: seo.title },
     {
       tag: 'meta',
