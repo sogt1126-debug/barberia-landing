@@ -131,14 +131,8 @@ export function Footer() {
         </div>
 
         {/* Barra legal */}
-        <div className="mt-12 flex flex-col gap-3 border-t border-cream/10 pt-7 text-xs text-cream/60 md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 border-t border-cream/10 pt-7 text-xs text-cream/60">
           <p>{copyright}</p>
-          <a
-            href="#privacidad"
-            className="w-fit underline decoration-cream/20 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold/50"
-          >
-            Política de privacidad
-          </a>
         </div>
       </div>
     </footer>

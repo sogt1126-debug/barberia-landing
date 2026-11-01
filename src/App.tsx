@@ -7,16 +7,10 @@ import { Footer } from './components/Footer'
 import { Gallery } from './components/Gallery'
 import { Hero } from './components/Hero'
 import { Navbar } from './components/Navbar'
-import { PoliticaDePrivacidad } from './components/PoliticaDePrivacidad'
 import { Services } from './components/Services'
 import { TrustBar } from './components/TrustBar'
 
-/**
- * Enrutado mínimo por hash, sin dependencias:
- * - `#privacidad` muestra la política de privacidad.
- * - Cualquier otro hash (#inicio, #servicios...) muestra la landing
- *   y salta a esa sección.
- */
+/** Enrutado mínimo por hash, sin dependencias (#inicio, #servicios...). */
 function useRuta(): string {
   const [hash, setHash] = useState(() => window.location.hash)
 
@@ -31,15 +25,15 @@ function useRuta(): string {
 
 export default function App() {
   const ruta = useRuta()
-  const enPrivacidad = ruta === 'privacidad'
 
-  // Tras cambiar de vista con hash de sección, saltar tras el render.
+  // Desplaza a la sección al montar o cambiar de hash (React pinta las
+  // secciones después de la carga, así que el ancla nativa no basta).
   useEffect(() => {
-    if (enPrivacidad || !ruta) return
+    if (!ruta) return
     requestAnimationFrame(() => {
       document.getElementById(ruta)?.scrollIntoView({ block: 'start' })
     })
-  }, [ruta, enPrivacidad])
+  }, [ruta])
 
   return (
     <>
@@ -50,24 +44,16 @@ export default function App() {
         Saltar al contenido
       </a>
 
-      {/* key: al entrar/salir de #privacidad la navbar se reinicia,
-          borrando el estado heredado del scrollspy de la landing. */}
-      <Navbar key={enPrivacidad ? 'privacidad' : 'landing'} />
+      <Navbar />
 
       <main id="contenido">
-        {enPrivacidad ? (
-          <PoliticaDePrivacidad />
-        ) : (
-          <>
-            <Hero />
-            <TrustBar />
-            <Services />
-            <Gallery />
-            <About />
-            <CallToAction />
-            <Contact />
-          </>
-        )}
+        <Hero />
+        <TrustBar />
+        <Services />
+        <Gallery />
+        <About />
+        <CallToAction />
+        <Contact />
       </main>
 
       <Footer />

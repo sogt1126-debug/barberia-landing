@@ -75,7 +75,7 @@ export const siteConfig = {
   brand: {
     /** Nombre corto: se usa en el logotipo del navbar y del footer. */
     name: 'BLACK LABEL',
-    /** Nombre completo: SEO, títulos y textos legales. */
+    /** Nombre completo: SEO y títulos. */
     fullName: 'BLACK LABEL BARBER STUDIO',
     /** Segunda línea del logotipo. */
     suffix: 'BARBER STUDIO',
@@ -359,19 +359,6 @@ export const siteConfig = {
         url: 'https://www.tiktok.com/@blacklabel.ejemplo',
       },
     ] as Social[],
-  },
-
-  /* ------------------------------------------------------------
-   * LEGAL — política de privacidad (#privacidad)
-   * ------------------------------------------------------------ */
-  legal: {
-    /**
-     * Fecha de la última revisión de la política de privacidad.
-     * Se muestra en la página `#privacidad`. Actualízala si cambian
-     * los datos del negocio o si se añaden herramientas que sí
-     * traten datos (analíticas, píxeles, reservas, formularios...).
-     */
-    politicaActualizada: '16 de octubre de 2026',
   },
 
   /* ------------------------------------------------------------

@@ -60,7 +60,6 @@ src/
 │   ├── About.tsx           sección "nosotros"
 │   ├── CallToAction.tsx    banda destacada de conversión
 │   ├── Contact.tsx         ubicación, horarios y redes
-│   ├── PoliticaDePrivacidad.tsx política de privacidad (vista #privacidad)
 │   ├── Footer.tsx          pie de página
 │   ├── FloatingWhatsApp.tsx botón flotante
 │   ├── WhatsAppButton.tsx  botón reutilizable hacia wa.me
@@ -97,7 +96,6 @@ Todo lo que cambia entre clientes está centralizado en ese archivo:
 | Dirección y enlace de Maps | `contact.address`, `contact.mapsUrl` |
 | Horarios | `contact.hours` |
 | Instagram y TikTok | `contact.socials` |
-| Fecha de la política de privacidad | `legal.politicaActualizada` |
 
 #### Número de WhatsApp
 
@@ -213,9 +211,6 @@ Para personalizar:
   chocar con la barra del sistema (el footer reserva espacio inferior en
   móvil). Glifo y etiqueta en tinta sobre verde (contraste 9.9:1).
 - **Responsive** verificado de 320 a 1920 px sin scroll horizontal.
-- **Política de privacidad** en la vista `#privacidad` (enlace en el pie):
-  describe con exactitud lo que el sitio hace hoy — no recoge datos —
-  redactada sobre la Ley N° 29733 (Perú).
 - **Cero peticiones a terceros**: fotos y tipografías se sirven desde el
   propio dominio; solo se conecta a WhatsApp, Maps o redes cuando el
   visitante toca un enlace.
@@ -262,29 +257,11 @@ Antes de personalizar la landing, recopila (todo se edita en
    comprobar que no hay scroll horizontal.
 6. Probar los botones de WhatsApp (hero, servicios, flotante y pie) con el
    número real, y el enlace de Maps.
-7. Fecha de la política (`legal.politicaActualizada`) puesta al día y texto
-   revisado si el sitio ha cambiado.
-8. `seo.url` con el dominio definitivo **antes** de generar el build final
+7. `seo.url` con el dominio definitivo **antes** de generar el build final
    (de lo contrario faltarán canonical, `og:url` y sitemap).
-9. Build final con `npm run build` y subida de `dist/` al hosting.
-10. Verificar en el dominio publicado: título, favicon, imagen al compartir
-    en WhatsApp y `https://dominio/sitemap.xml`.
-
----
-
-## Política de privacidad
-
-La web incluye una política completa en la vista `#privacidad` (enlace en la
-barra legal del pie). Está redactada para este sitio tal como funciona hoy:
-sin formularios, cookies ni analíticas, con los datos del negocio tomados de
-`site.ts` (nombre, dirección, WhatsApp y fecha — `legal.politicaActualizada`).
-
-⚠️ Si el cliente añade herramientas que sí traten datos (Google Analytics,
-píxel de Meta, reservas en línea, formularios...), **actualiza el texto y la
-fecha** en `src/components/PoliticaDePrivacidad.tsx` y en `site.ts`. Es un
-modelo informativo basado en la Ley N° 29733 (Perú); para un cliente real
-conviene que un profesional lo revise, sobre todo si el negocio opera en
-otro país.
+8. Build final con `npm run build` y subida de `dist/` al hosting.
+9. Verificar en el dominio publicado: título, favicon, imagen al compartir
+   en WhatsApp y `https://dominio/sitemap.xml`.
 
 ---
 
